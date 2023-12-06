@@ -38,28 +38,30 @@ class CheckersBoard:
 		new_board = CheckersBoard()
 		for i in range(8):
 			for j in range(8):
-				if self._board[i][j] is not None:
+				if self._board[i][j]:
 					new_board._board[i][j] = self._board[i][j].copy()
 		return new_board
 	
 	def heuristic(self):
 		return 0
 	
-	def generate_all_sucessors(self, color: int):
+	def generate_all_sucessors(self, color: int) -> deque['CheckersBoard']:
 		sucessors = deque()
 		for i in range(8):
 			for j in range(8):
-				if self._board[i][j].get_color() == color and self._board[i][j] is not None:
-					sucessors += self.get_sucessors(i, j)
+				if self._board[i][j] and self._board[i][j].get_color() == color:
+					t = self.get_sucessors(i, j)
+					if t: sucessors += t
 		return sucessors
 
 	def get_sucessors(self, i: int, j: int):
 		if self._board[i][j] is None:
 			return []
-		all_moves = self.get_moves_for_color(i, j)
+		all_moves = self.get_all_moves(i, j)
 		sucessors = deque()
 		for move in all_moves:
 			is_possible, will_kill, new_pos, killed_pos = self.is_move_possible(i, j, move)
+			print((i, j), is_possible, will_kill, new_pos, killed_pos)
 			if not is_possible:
 				continue
 			new_board = self.copy()
@@ -67,19 +69,16 @@ class CheckersBoard:
 			# if piece will be killed
 			if will_kill:
 				old_piece = new_board._board[i][j]
-				new_board._board[i][j] = None
-				new_board[killed_pos[0]][killed_pos[1]] = None
-				new_board[new_pos[0]][new_pos[1]] = old_piece
+				new_board._board[killed_pos[0]][killed_pos[1]] = None
+				new_board._board[new_pos[0]][new_pos[1]] = old_piece
 				new_board.crown_if_necessary(new_pos[0], new_pos[1])
-				sucessors.append(new_board)
-				continue
-
-			# if no need to kill any piece
-			new_board[new_pos[0]][new_pos[1]] = new_board._board[i][j]
-			new_board[new_pos[0]][new_pos[1]].crown_if_necessary(new_pos[0], new_pos[1])
+			else:
+				# if no need to kill any piece
+				new_board._board[new_pos[0]][new_pos[1]] = new_board._board[i][j]
+				new_board.crown_if_necessary(new_pos[0], new_pos[1])
 			new_board._board[i][j] = None
 			sucessors.append(new_board)
-
+		return sucessors
 
 	def crown_if_necessary(self, i: int, j: int):
 		# crowns piece if it achieves crowning conditions
@@ -121,12 +120,12 @@ class CheckersBoard:
 	def out_of_bounds(self, i: int, j: int):
 		return (i < 0) or (i > 7) or (j < 0) or (j > 7)
 	
-	def get_moves(self, i: int, j: int):
+	def get_all_moves(self, i: int, j: int):
 		all_moves = deque()
 		if self._board[i][j].get_color() == 1 or self._board[i][j].get_isKing():
-			all_moves += deque((1, 1), (-1, 1))
+			all_moves += deque([(-1, 1), (-1, -1)])
 		if self._board[i][j].get_color() == 2 or self._board[i][j].get_isKing():
-			all_moves += deque((1, -1), (-1, -1))
+			all_moves += deque([(1, 1), (1, -1)])
 		return all_moves
 
 if __name__ == "__main__":
