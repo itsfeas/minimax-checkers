@@ -13,12 +13,24 @@ class Piece:
 	def get_pos(self):
 		return self._pos
 	
+	def get_x(self):
+		return self._pos[0]
+	
+	def get_y(self):
+		return self._pos[1]
+	
 	def get_color(self):
 		return self._color
 	
 	def get_isKing(self):
 		return self._isKing
-	
+
+	def set_x(self, x: int):
+		self._pos[0] = x
+
+	def set_y(self, y: int):
+		self._pos[1] = y
+
 	def set_pos(self, x: int, y: int):
 		self._pos = (x, y)
 
