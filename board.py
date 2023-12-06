@@ -7,25 +7,24 @@ class CheckersBoard:
 	def __init__(self):
 		for i in range(3):
 			for j in range(8):
-				if (j) % 2:
-					self._board[i][j] = Piece(i, j, 1)
+				if (i + j) % 2 == 0:
+					self._board[i][j] = Piece(1)
 		for i in range(5, 8):
 			for j in range(8):
-				if (j + 1) % 2 == 0:
-					self._board[i][j] = Piece(i, j, 2)
+				if (i + j) % 2 == 0:
+					self._board[i][j] = Piece(2)
 
 	def __str__(self):
-		s = "=" * 24 + "\n"
+		s = "=" * 32 + "\n"
 		for i in range(8):
-			t = "|"
+			s += "|"
 			for j in range(8):
 				if self._board[i][j] is None:
-					s += "  "
+					s += "   |"
 				else:
-					s += "{2f}|".format(str(self._board[i][j]))
-			s += t + "|\n"
-			s += str(self._board[i]) + "\n"
-		return s + "=" * 24 + "\n"
+					s += str(self._board[i][j]).ljust(3) + "|"
+			s += "\n" + "=" * 32 + "\n"
+		return s
 	
 	def __repr__(self):
 		s = ""
