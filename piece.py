@@ -6,11 +6,11 @@ class Piece:
 		self._color = color
 
 	def __str__(self):
-		s = "+" if self._isKing else ""
-		return s + "W" if self._color == 2 else "B"
+		s = "W" if self._color == 2 else "B"
+		return s + ("+" if self._isKing else "")
 	
 	def __repr__(self):
-		return f"[color: {self._color}, isKing: {self._color}, pos: {self._pos}]"
+		return f"[color: {self._color}, isKing: {self._isKing}]"
 	
 	def get_color(self):
 		return self._color
