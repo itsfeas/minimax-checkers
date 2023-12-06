@@ -12,6 +12,11 @@ class Piece:
 	def __repr__(self):
 		return f"[color: {self._color}, isKing: {self._isKing}]"
 	
+	def copy(self):
+		new_piece = Piece(self._color)
+		new_piece.set_isKing(self._isKing)
+		return new_piece
+	
 	def get_color(self):
 		return self._color
 	
