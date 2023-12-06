@@ -8,11 +8,11 @@ class CheckersBoard:
 		for i in range(3):
 			for j in range(8):
 				if (i + j) % 2 == 0:
-					self._board[i][j] = Piece(1)
+					self._board[i][j] = Piece(2)
 		for i in range(5, 8):
 			for j in range(8):
 				if (i + j) % 2 == 0:
-					self._board[i][j] = Piece(2)
+					self._board[i][j] = Piece(1)
 
 	def __str__(self):
 		s = "=" * 32 + "\n"
