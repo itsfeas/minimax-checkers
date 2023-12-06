@@ -9,3 +9,21 @@ class Piece:
 
 	def __str__(self):
 		return f"[color: {self._color}, isKing: {self._color}, pos: ({self._pos[0]}, {self._pos[1]})]"
+	
+	def get_pos(self):
+		return self._pos
+	
+	def get_color(self):
+		return self._color
+	
+	def get_isKing(self):
+		return self._isKing
+	
+	def set_pos(self, x: int, y: int):
+		self._pos = (x, y)
+
+	def set_color(self, color: int):
+		self._color = color
+
+	def set_isKing(self, isKing: bool):
+		self._isKing = isKing
