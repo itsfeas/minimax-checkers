@@ -42,6 +42,17 @@ class CheckersBoard:
 					new_board._board[i][j] = self._board[i][j].copy()
 		return new_board
 	
+	def heuristic(self):
+		return 0
+	
+	def generate_all_sucessors(self, color: int):
+		sucessors = deque()
+		for i in range(8):
+			for j in range(8):
+				if self._board[i][j].get_color() == color and self._board[i][j] is not None:
+					sucessors += self.get_sucessors(i, j)
+		return sucessors
+
 	def get_sucessors(self, i: int, j: int):
 		if self._board[i][j] is None:
 			return []
